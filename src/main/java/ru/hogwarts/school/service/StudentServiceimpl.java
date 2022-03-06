@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentServiceimpl implements StudentService {
@@ -39,5 +40,17 @@ public class StudentServiceimpl implements StudentService {
 
     @Override
     public Collection<Student> getByAge(int age) {
-        return studentRepository.findByAge(age);    }
+        return studentRepository.findByAge(age);
+    }
+
+    @Override
+    public List<Student> findByAge(int age) {
+        return studentRepository.findByAge(age);
+    }
+
+    @Override
+    public List<Student> findByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
 }

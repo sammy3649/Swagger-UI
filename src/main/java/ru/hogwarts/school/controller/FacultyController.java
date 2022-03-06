@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -19,7 +20,7 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty createFaculty(@RequestBody Faculty faculty) {
+    public Faculty createFaculty(@org.springframework.web.bind.annotation.RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);
     }
 
@@ -61,5 +62,31 @@ public class FacultyController {
         return ResponseEntity.ok(facultyCollection);
 
     }
+    @GetMapping(params = {"color"})
+    public List<Faculty> findByColor(
+            @RequestParam(required = false) String color) {
+        return facultyService.findByColor(color);
+    }
+
+    @GetMapping(params = {"name"})
+    public List<Faculty> findByColorOrName(
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) String name) {
+        return facultyService.findByColorOrName(color, name);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

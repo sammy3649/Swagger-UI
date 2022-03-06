@@ -9,6 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -21,7 +22,7 @@ public class StudentController {
 
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
+    public Student createStudent(@org.springframework.web.bind.annotation.RequestBody Student student) {
         return studentService.createStudent(student);
     }
 
@@ -63,4 +64,18 @@ public class StudentController {
         return ResponseEntity.ok(studentCollection);
 
     }
+
+    @GetMapping(params = {"age"})
+    public List<Student> findByAge(@RequestParam(required = false) int age) {
+        return studentService.findByAge(age);
+    }
+
+    @GetMapping(params = {"minAge", "maxAge"})
+    public List<Student> findByAgeBetween(
+            @RequestParam(required = false) int minAge,
+            @RequestParam(required = false) int maxAge
+    ) {
+        return studentService.findByAgeBetween(minAge, maxAge);
+    }
 }
+
