@@ -37,7 +37,7 @@ public class StudentController {
     }
 
     @PutMapping
-    public ResponseEntity<Student> upDateStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student putStudent = studentService.updateStudent(student);
         if (putStudent == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -53,16 +53,6 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(deleteStudent);
-    }
-
-    @GetMapping
-    public ResponseEntity<Collection<Student>> getByAge(@RequestParam("age") int age) {
-        Collection<Student> studentCollection = studentService.getByAge(age);
-        if (studentCollection.size() == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(studentCollection);
-
     }
 
     @GetMapping(params = {"age"})

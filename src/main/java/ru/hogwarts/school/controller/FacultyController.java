@@ -35,7 +35,7 @@ public class FacultyController {
     }
 
     @PutMapping
-    public ResponseEntity<Faculty> upDateFaculty(@RequestBody Faculty faculty) {
+    public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
         Faculty putFaculty = facultyService.updateFaculty(faculty);
         if (putFaculty == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -53,15 +53,6 @@ public class FacultyController {
         return ResponseEntity.ok(deleteFaculty);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> getByColor(@RequestParam("color") String color) {
-        Collection<Faculty> facultyCollection = facultyService.getByColor(color);
-        if (facultyCollection.size() == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(facultyCollection);
-
-    }
     @GetMapping(params = {"color"})
     public List<Faculty> findByColor(
             @RequestParam(required = false) String color) {

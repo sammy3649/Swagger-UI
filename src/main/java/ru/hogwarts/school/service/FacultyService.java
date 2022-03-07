@@ -14,8 +14,6 @@ public interface FacultyService {
 
     Faculty updateFaculty(Faculty faculty);
 
-    Collection<Faculty> getByColor(String color);
-
     List<Faculty> findByColor(String color);
 
     List<Faculty> findByColorOrName(String color, String name);
