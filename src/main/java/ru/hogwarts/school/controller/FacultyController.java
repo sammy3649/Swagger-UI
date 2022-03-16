@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -46,12 +45,8 @@ public class FacultyController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable long id) {
-        Faculty deleteFaculty = facultyService.deleteFaculty(id);
-        if (deleteFaculty == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(deleteFaculty);
-    }
+            facultyService.deleteFaculty(id);
+            return ResponseEntity.ok().build();}
 
     @GetMapping(params = {"color"})
     public List<Faculty> findByColor(
@@ -60,13 +55,17 @@ public class FacultyController {
     }
 
     @GetMapping(params = {"name"})
-    public List<Faculty> findByColorOrName(
+    public ResponseEntity<List<Faculty>> findByColorOrName(
             @RequestParam(required = false) String color,
             @RequestParam(required = false) String name) {
-        return facultyService.findByColorOrName(color, name);
-    }
+        List<Faculty> facultyByColorOrName = facultyService.findByColorOrName(color, name);
+        if (facultyByColorOrName.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(facultyByColorOrName);
+    }    }
 
-}
+
 
 
 
