@@ -67,5 +67,24 @@ public class StudentController {
     ) {
         return studentService.findByAgeBetween(minAge, maxAge);
     }
+
+    @GetMapping("/count")
+    public Integer getStudentsCount() {
+        return studentService.getStudentsCount();
+    }
+
+    @GetMapping("/average")
+    public Integer getStudentsAverageAge() {
+        return studentService.getStudentsAverageAge();
+    }
+
+    @GetMapping("/laststudents")
+    public ResponseEntity<Collection<Student>> getLastStudent() {
+        Collection<Student> lastStudent = studentService.getLastStudent();
+        if (lastStudent.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(lastStudent);
+    }
 }
 
