@@ -14,6 +14,7 @@ import ru.hogwarts.school.model.Student;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.hogwarts.school.constants.TestConstants.*;
 
@@ -57,13 +58,13 @@ class StudentControllerTests {
 
     @Test
     void contextLoads() {
-        org.assertj.core.api.Assertions.assertThat(studentController).isNotNull();
+        assertThat(studentController).isNotNull();
     }
 
     @Test
     void createStudentTest() {
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.postForObject(baseUrl, student, String.class)).isNotNull();
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.postForObject(baseUrl, student, Student.class)).isEqualTo(student);
+        assertThat(this.testRestTemplate.postForObject(baseUrl, student, String.class)).isNotNull();
+        assertThat(this.testRestTemplate.postForObject(baseUrl, student, Student.class)).isEqualTo(student);
     }
 
     @Test
@@ -72,14 +73,14 @@ class StudentControllerTests {
         student.setId(studentId);
         testRestTemplate.delete(baseUrl + studentId);
 
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isNotIn(student);
+        assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isNotIn(student);
     }
 
     @Test
     void getStudent() {
         studentId = testRestTemplate.postForObject(baseUrl, student, Student.class).getId();
 
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isEqualTo(student);
+        assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isEqualTo(student);
     }
 
     @Test
@@ -92,7 +93,7 @@ class StudentControllerTests {
 
         testRestTemplate.put(baseUrl, student);
 
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isEqualTo(student);
+        assertThat(this.testRestTemplate.getForObject(baseUrl + studentId, Student.class)).isEqualTo(student);
     }
 
     @Test
@@ -103,7 +104,7 @@ class StudentControllerTests {
 
         student.setId(studentId);
 
-        org.assertj.core.api.Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + "?age=" + AGE_STUDENT1, Collection.class)).isNotNull();
+        assertThat(this.testRestTemplate.getForObject(baseUrl + "?age=" + AGE_STUDENT1, Collection.class)).isNotNull();
     }
 
     @Test
@@ -115,7 +116,7 @@ class StudentControllerTests {
         student.setAge(AGE_STUDENT4);
         studentId = testRestTemplate.postForObject(baseUrl, student, Student.class).getId();
 
-        Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + "?minAge=" + AGE_STUDENT5 + "&maxAge=" + AGE_STUDENT6, ArrayList.class).size()).isGreaterThan(3);
+        assertThat(this.testRestTemplate.getForObject(baseUrl + "?minAge=" + AGE_STUDENT5 + "&maxAge=" + AGE_STUDENT6, ArrayList.class).size()).isGreaterThan(3);
     }
 
 }
