@@ -40,7 +40,7 @@ class StudentControllerTests {
     @BeforeEach
     void initTestData() {
         student = new Student();
-        student.setId(115L);
+        student.setId(153L);
         student.setName("Name");
         student.setAge(20);
     }
@@ -54,7 +54,6 @@ class StudentControllerTests {
     void delete() {
         testRestTemplate.delete(baseUrl + studentId);
     }
-
 
     @Test
     void contextLoads() {
@@ -116,7 +115,7 @@ class StudentControllerTests {
         student.setAge(AGE_STUDENT4);
         studentId = testRestTemplate.postForObject(baseUrl, student, Student.class).getId();
 
-        Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + "?min=" + AGE_STUDENT5 + "&max=" + AGE_STUDENT6, ArrayList.class).size()).isGreaterThan(80).isLessThan(100);
+        Assertions.assertThat(this.testRestTemplate.getForObject(baseUrl + "?minAge=" + AGE_STUDENT5 + "&maxAge=" + AGE_STUDENT6, ArrayList.class).size()).isGreaterThan(3);
     }
 
 }

@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.hogwarts.school.constants.TestConstants.*;
 
 @WebMvcTest(controllers = FacultyController.class)
-class FacultyControllerWithMockTest {
+class FacultyControllerTest {
 
     private Faculty faculty;
 
@@ -75,13 +75,9 @@ class FacultyControllerWithMockTest {
                 faculty1,
                 faculty2
         );
-
-
         facultyObj = new JSONObject();
         facultyObj.put("name", NAME);
         facultyObj.put("color", COLOR);
-
-
     }
 
     @Test
@@ -97,8 +93,6 @@ class FacultyControllerWithMockTest {
                 .andExpect(jsonPath("$.id").value(FACULTY_ID))
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.color").value(COLOR));
-
-
     }
 
     @Test
@@ -135,7 +129,7 @@ class FacultyControllerWithMockTest {
         when(facultyRepository.getById(FACULTY_ID)).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/faculty/{id}",FACULTY_ID))
+                        .delete("/faculty/{id}", FACULTY_ID))
                 .andExpect(status().isOk());
     }
 
@@ -156,13 +150,13 @@ class FacultyControllerWithMockTest {
         when(facultyRepository.findByColorOrNameIgnoreCase(anyString(), anyString())).thenReturn((List<Faculty>) facultyList);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/?name=" + COLOR + "&name=" + NAME)
+                        .get("/faculty/params/?color=" + COLOR + "&name=" + NAME)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*].color").isNotEmpty());
-    }
 
+    }
 }
