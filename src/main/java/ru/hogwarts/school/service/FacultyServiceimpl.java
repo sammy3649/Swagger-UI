@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyServiceimpl implements FacultyService {
@@ -58,5 +60,12 @@ public class FacultyServiceimpl implements FacultyService {
         return facultyRepository.findByColorOrNameIgnoreCase(color, name);
     }
 
-
+    @Override
+    public String getTheLongestName() {
+        log.info("Was invoked method to get the longest name");
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse(null);
+    }
 }
