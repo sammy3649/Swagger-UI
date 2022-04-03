@@ -9,6 +9,8 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("faculty")
@@ -66,18 +68,21 @@ public class FacultyController {
         return facultyService.findByColorOrName(color, name);
     }
 
+    @GetMapping("/getlongestname")
+    public String getTheLongestName() {
+        return facultyService.getTheLongestName();
+    }
+
+    @GetMapping("/getgeneratevalue")
+    public Integer getGenerateValue() {
+        List<Integer> limits = Stream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .collect(Collectors.toList());
+        long times = System.currentTimeMillis();
+        int sum = limits.stream()
+                .parallel()
+                .mapToInt(a -> a)
+                .sum();
+        return (int) (System.currentTimeMillis() - times);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
