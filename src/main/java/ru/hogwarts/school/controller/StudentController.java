@@ -96,4 +96,17 @@ public class StudentController {
     public int getStudentsAverageAgeWithStream() {
         return studentService.getStudentsAverageAgeWithStream();
     }
+
+    @GetMapping("/getstudentswithstreams")
+    public ResponseEntity<Void> getStudentsWithStreams() {
+        studentService.getStudentsWithStreams();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getstudentswithstreamssynchronized")
+    public ResponseEntity<Void> getStudentsWithStreamsSynchronized() {
+        studentService.getStudentsWithStreamsSynchronized();
+        return ResponseEntity.ok().build();
+    }
+
 }
