@@ -96,4 +96,49 @@ public class StudentServiceimpl implements StudentService {
                 .orElse(0);
     }
 
+    @Override
+    public void getStudentsWithStreams() {
+        Thread streamStudents = new Thread(() -> {
+            printName(3L);
+            printName(4L);
+        });
+        streamStudents.setName("names streams 1");
+        Thread streamStudents2 = new Thread(() -> {
+            printName(5L);
+            printName(6L);
+        });
+        streamStudents.setName("names streams 2");
+        streamStudents.start();
+        streamStudents2.start();
+        printName(1L);
+        printName(2L);
+    }
+
+    @Override
+    public void getStudentsWithStreamsSynchronized() {
+        Thread streamStudents = new Thread(() -> {
+            printNameSynchronized(3L);
+            printNameSynchronized(4L);
+        });
+        streamStudents.setName("names streams 1");
+        Thread streamStudents2 = new Thread(() -> {
+            printNameSynchronized(5L);
+            printNameSynchronized(6L);
+        });
+        streamStudents.setName("names streams 2");
+        printNameSynchronized(1L);
+        printNameSynchronized(2L);
+        streamStudents.start();
+    }
+
+    private void printName(Long id) {
+        String names = studentRepository.getById(id).getName();
+        System.out.println(names);
+    }
+
+    private synchronized void printNameSynchronized(Long id) {
+        String names = studentRepository.getById(id).getName();
+        System.out.println(names);
+    }
+
 }

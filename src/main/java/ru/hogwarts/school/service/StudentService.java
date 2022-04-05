@@ -27,4 +27,8 @@ public interface StudentService {
     List<String> getStudentNameStartWithA();
 
     int getStudentsAverageAgeWithStream();
+
+    void getStudentsWithStreams();
+
+    void getStudentsWithStreamsSynchronized();
 }
